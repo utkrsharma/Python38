@@ -1,0 +1,51 @@
+#In your project directory, let's start off by creating a virtualenv:
+$ python -m venv venv/
+
+#And activate it with the following command (on windows):
+$ venv\Scripts\activate
+
+#Then, use pip to install the libraries we're going to use - 'flask' to build the app and 'gunicorn' as our server:
+$ pip install flask
+$ pip install gunicorn
+
+#Then, create main project file - eg.:app.py
+
+#Run file locally with:
+$ python app.py
+
+#Now, we need to create a 'requirements.txt' file with all of the modules:
+$ pip freeze > requirements.txt
+
+#This way we end up with a 'requirements.txt' file that contains the libraries we're using and their versions:
+Click==7.0
+Flask==1.1.1
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+Werkzeug==0.15.6
+
+#For Heroku to be able to run our application like it should, we need to define a set of processes/commands that it should run beforehand. These commands are located in the Procfile:
+$ web: gunicorn app:app
+The web command tells Heroku to start a web server for the application, using gunicorn. Since our application is called app.py, we've set the app name to be app as well.
+
+#Create the app on heroku server:
+$ heroku create app_name(if left empty, heroku will choose a random name)
+This will create an empty app on heroku
+
+#To upload our code, we'll use Git. First, let's make a git repository:
+$ git init
+
+#And now, let's add our files and commit:
+$ git add app.py Procfile requirements.txt
+$ git commit -m "first commit"
+
+#Now login to your heroku account:
+$ heroku login -i
+
+#At this point, while logged in, we should add our repository to the remote one:
+$ heroku git:remote -a {your-project-name}
+Be sure to replace {your-project-name} with the actual name of your project you selected in the earlier step.
+
+#And with that done, let's upload the project by pushing it to Heroku:
+$ git push heroku master
